@@ -1,6 +1,6 @@
 
 server:
-  port: 8382
+  port: 8082
 
 management:
   endpoints:
@@ -33,7 +33,7 @@ lab:
   investment:
     paths:
       client-account-name: "account-microservice"
-      client-account-base-url: "http://localhost:8381"
+      client-account-base-url: "http://localhost:8081"
       client-account-balance-path-url: "/api/v1/accounts/{accountId}/balance"
       client-account-debit-path-url: "/api/v1/accounts/{accountId}/debit"
     exceptions:
