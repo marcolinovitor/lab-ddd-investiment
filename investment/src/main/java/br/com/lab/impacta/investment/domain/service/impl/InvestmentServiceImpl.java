@@ -1,8 +1,10 @@
 package br.com.lab.impacta.investment.domain.service.impl;
 
 
+import br.com.lab.impacta.investment.domain.exception.InvestmentAccountNotDebitedException;
 import br.com.lab.impacta.investment.domain.exception.InvestmentProductNotFoundException;
 import br.com.lab.impacta.investment.domain.exception.NotEnoughBalanceException;
+import br.com.lab.impacta.investment.domain.exception.PrivateProductNotAvailableException;
 import br.com.lab.impacta.investment.domain.model.Investment;
 import br.com.lab.impacta.investment.domain.model.Product;
 import br.com.lab.impacta.investment.domain.service.InvestmentService;
@@ -37,6 +39,16 @@ public class InvestmentServiceImpl implements InvestmentService {
     @Value("${lab.investment.exception.account-without-balance-message}")
     private String MESSAGE_NOT_ENOUGH_BALANCE_EX;
 
+    @Value("${lab.investment.exception.account-without-balance-for-product-private-description}")
+    private String DESCRIPTION_PRIVATE_PRODUCT_NOT_AVAILABLE_EX;
+    @Value("${lab.investment.exception.account-without-balance-for-product-private-message}")
+    private String MESSAGE_PRIVATE_PRODUCT_NOT_AVAILABLE_EX;
+
+    @Value("${lab.investment.exception.account-is-not-debited-description}")
+    private String DESCRIPTION_ACCOUNT_NOT_DEBITED_EX;
+    @Value("${lab.investment.exception.account-is-not-debited-message}")
+    private String MESSAGE_ACCOUNT_NOT_DEBITED_EX;
+
 
     @Override
     public Investment invest(Long productId, Long accountId, Double investmentValue) {
@@ -58,6 +70,24 @@ public class InvestmentServiceImpl implements InvestmentService {
             );
         }
 
-        return null;
+        if (!investment.verifyProductPrivateOrDefaultForInvestment(accountBalanceVO.getBalance(), product.get())) {
+            throw new PrivateProductNotAvailableException(
+                    DESCRIPTION_PRIVATE_PRODUCT_NOT_AVAILABLE_EX,
+                    MESSAGE_PRIVATE_PRODUCT_NOT_AVAILABLE_EX
+            );
+        }
+
+        boolean isDebited = accountFacade.debitAccount(accountId, investmentValue);
+
+        if (!isDebited) {
+            throw new InvestmentAccountNotDebitedException(
+                    DESCRIPTION_ACCOUNT_NOT_DEBITED_EX,
+                    MESSAGE_ACCOUNT_NOT_DEBITED_EX
+            );
+        }
+
+        investmentRepository.save(investment);
+
+        return investment;
     }
 }
