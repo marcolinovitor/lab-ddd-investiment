@@ -29,24 +29,24 @@ public class InvestmentServiceImpl implements InvestmentService {
     @Autowired
     private AccountFacade accountFacade;
 
-    @Value("${lab.investment.exception.product-dont-exists-description}")
+    @Value("${lab.investment.exceptions.product-dont-exists-description}")
     private String DESCRIPTION_PRODUCT_NOT_FOUND_EX;
-    @Value("${lab.investment.exception.product-dont-exists-message}")
+    @Value("${lab.investment.exceptions.product-dont-exists-message}")
     private String MESSAGE_PRODUCT_NOT_FOUND_EX;
 
-    @Value("${lab.investment.exception.account-without-balance-description}")
+    @Value("${lab.investment.exceptions.account-without-balance-description}")
     private String DESCRIPTION_NOT_ENOUGH_BALANCE_EX;
-    @Value("${lab.investment.exception.account-without-balance-message}")
+    @Value("${lab.investment.exceptions.account-without-balance-message}")
     private String MESSAGE_NOT_ENOUGH_BALANCE_EX;
 
-    @Value("${lab.investment.exception.account-without-balance-for-product-private-description}")
+    @Value("${lab.investment.exceptions.account-without-balance-for-product-private-description}")
     private String DESCRIPTION_PRIVATE_PRODUCT_NOT_AVAILABLE_EX;
-    @Value("${lab.investment.exception.account-without-balance-for-product-private-message}")
+    @Value("${lab.investment.exceptions.account-without-balance-for-product-private-message}")
     private String MESSAGE_PRIVATE_PRODUCT_NOT_AVAILABLE_EX;
 
-    @Value("${lab.investment.exception.account-is-not-debited-description}")
+    @Value("${lab.investment.exceptions.account-is-not-debited-description}")
     private String DESCRIPTION_ACCOUNT_NOT_DEBITED_EX;
-    @Value("${lab.investment.exception.account-is-not-debited-message}")
+    @Value("${lab.investment.exceptions.account-is-not-debited-message}")
     private String MESSAGE_ACCOUNT_NOT_DEBITED_EX;
 
 
